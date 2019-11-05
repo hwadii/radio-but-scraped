@@ -1,18 +1,24 @@
-const links = [
-  "http://stream1.addictradio.net/addictalternative.mp3",
-  "http://stream1.addictradio.net/addictlounge.mp3",
-  "http://stream1.addictradio.net/addictrock.mp3",
-  "http://stream1.addictradio.net/addictstar.mp3",
-  "http://start-adofm.ice.infomaniak.ch/start-adofm-high.mp3",
-  "http://bayoublueradio.com:8000/live"
-];
-
 const radioList = document.querySelector("select");
-let option;
-for (let link of links) {
-  option = document.createElement("option");
-  option.value = link;
-  option.textContent = link;
-  radioList.appendChild(option);
-}
-console.log(radioList);
+const audio = document.querySelector("audio");
+
+fetch("radios.json")
+  .then(response => response.json())
+  .then(radios => {
+    let option;
+    for (let radio of radios) {
+      option = document.createElement("option");
+      option.value = radio.url;
+      option.textContent = radio.title;
+      radioList.appendChild(option);
+    }
+    radioList.onchange = ev => {
+      audio.src = ev.target.value;
+      audio.play();
+      localStorage.setItem("current_radio", audio.src);
+      localStorage.setItem("option_index", radioList.selectedIndex);
+    };
+  })
+  .then(() => {
+    audio.src = localStorage.getItem("current_radio");
+    radioList.selectedIndex = localStorage.getItem("option_index");
+  });
