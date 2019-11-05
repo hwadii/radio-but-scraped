@@ -1,2 +1,3 @@
-__pycache__/
-quotesbot/
+__pycache__
+quotesbot
+node_modules
