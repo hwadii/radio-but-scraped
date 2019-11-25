@@ -18,7 +18,7 @@ for element in elements:
         url = url.get_attribute("href")
     except:
         url = ""
-    item = {"title": title, "url": url}
+    item = {"title": title, "url": url, "N": 0, "n": 0}
     result.append(item)
 
 driver.close()
