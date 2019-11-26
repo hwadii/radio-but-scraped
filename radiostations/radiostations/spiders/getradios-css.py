@@ -9,10 +9,9 @@ class ToScrapeCSSSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        print(response.request.meta['driver'].title)
-        # for url in response.css("li.node"):
-            # yield {
-            #     "title": url.css("div.li > a.urlextern::text").extract_first(),
-            #     "url": url.css("ul.fix-media-list-overlap > li.level2 > div.li > a.urlextern::attr(href)").extract_first()
-            # }
+        for url in response.css("li.node"):
+            yield {
+                "title": url.css("div.li > a.urlextern::text").extract_first(),
+                "url": url.css("ul.fix-media-list-overlap > li.level2 > div.li > a.urlextern::attr(href)").extract_first()
+            }
 
